@@ -13,22 +13,6 @@ const InstituteLogin = () => {
           margin="normal"
           required
           fullWidth
-          label="Institute Name"
-          autoComplete="Institute Name"
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          label="Institute ID"
-          type="Institute ID"
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
           label="Institute  Wallet Address"
           type="Institute Wallet Address"
         />

@@ -1,8 +1,16 @@
 import React from 'react';
 import { Container, Typography, TextField, Button, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const InstituteRegister = () => {
+const InstituteRegister = () => { 
+  const navigate = useNavigate();
+
+  const handleInstituteRegister = () => {
+    
+    navigate('/login/InstituteLogin'); 
+  };
   return (
+
     <Container component="main" maxWidth="xs" style={styles.container}>
       <Typography variant="h5" gutterBottom>
         Institute Register
@@ -42,8 +50,10 @@ const InstituteRegister = () => {
         />
         
         <Button
+          
           variant="contained"
           color="primary"
+          onClick={handleInstituteRegister}
           fullWidth
           style={styles.button}
         >

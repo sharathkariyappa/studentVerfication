@@ -1,8 +1,17 @@
 import React from 'react';
 import { Container, Typography, TextField, Button, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const StudentRegister = () => {
+  const navigate = useNavigate();
+  
+  const handleregister = () => {
+    
+    navigate('/login/StudentLogin'); 
+  };
   return (
+
+    
     <Container component="main" maxWidth="xs" style={styles.container}>
       <Typography variant="h5" gutterBottom>
         Student Register
@@ -29,6 +38,14 @@ const StudentRegister = () => {
           margin="normal"
           required
           fullWidth
+          label="Institute ID"
+          type="Institute ID"
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
           label="Wallet Address"
           type="Wallet Address"
         />
@@ -42,8 +59,10 @@ const StudentRegister = () => {
         />
         
         <Button
+          
           variant="contained"
           color="primary"
+          onClick={handleregister}
           fullWidth
           style={styles.button}
         >
