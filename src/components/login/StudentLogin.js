@@ -1,13 +1,14 @@
 import React from 'react';
 import { Container, Typography, TextField, Button, Box } from '@mui/material';
-// import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 const StudentLogin = () => {
+  const navigate = useNavigate(); 
 
-  // const handleLogin =()=>{
-  //   const navigate = useNavigate(); 
-  //   navigate('/profile/StudentProfile'); 
-  // };
+  const handleLogin =()=>{
+    
+    navigate('/profile/StudentProfile'); 
+  };
   return (
     <Container component="main" maxWidth="xs" style={styles.container}>
       <Typography variant="h5" gutterBottom>
@@ -24,7 +25,7 @@ const StudentLogin = () => {
         />
         
         <Button
-          // onClick={handleLogin}
+          onClick={handleLogin}
           variant="contained"
           color="primary"
           fullWidth
