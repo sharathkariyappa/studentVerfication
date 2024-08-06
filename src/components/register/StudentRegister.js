@@ -1,0 +1,67 @@
+import React from 'react';
+import { Container, Typography, TextField, Button, Box } from '@mui/material';
+
+const StudentRegister = () => {
+  return (
+    <Container component="main" maxWidth="xs" style={styles.container}>
+      <Typography variant="h5" gutterBottom>
+        Student Register
+      </Typography>
+      <Box>
+      <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          label="Student Name"
+          type="Student Name"
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          label="Student ID"
+          type="Student ID"
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          label="Wallet Address"
+          type="Wallet Address"
+        />
+         <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          label="Email ID"
+          type="Email"
+        />
+        
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          style={styles.button}
+        >
+          Register
+        </Button>
+      </Box>
+    </Container>
+  );
+};
+
+const styles = {
+  container: {
+    textAlign: 'center',
+    padding: '20px',
+  },
+  button: {
+    marginTop: '20px',
+  },
+};
+
+export default StudentRegister;
