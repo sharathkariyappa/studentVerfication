@@ -17,6 +17,7 @@ const StudentRegister = () => {
         Student Register
       </Typography>
       <Box>
+      <div className='connectButton'>Connect</div>
       <TextField
           variant="outlined"
           margin="normal"

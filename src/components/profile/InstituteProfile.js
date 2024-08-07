@@ -6,15 +6,15 @@ const InstituteProfile = () => {
   const navigate = useNavigate();
 
 //   const handleViewStudentDetails = () => {
-//     navigate('/student-details'); // Adjust the path according to your routing setup
+//     navigate('/student-details'); 
 //   };
 
-//   const handleViewDocuments = () => {
-//     navigate('/documents'); // Adjust the path according to your routing setup
-//   };
+  const handleViewDocuments = () => {
+    navigate('/details/viewDocumentDetails'); 
+  };
 
 //   const handleVerifyDocuments = () => {
-//     navigate('/verify-documents'); // Adjust the path according to your routing setup
+//     navigate('/verify-documents'); 
 //   };
 const handleLogout = () => {
 
@@ -56,7 +56,7 @@ const handleLogout = () => {
           variant="contained"
           color="primary"
           style={styles.button}
-        //   onClick={handleViewDocuments}
+          onClick={handleViewDocuments}
         >
           View Documents
         </Button>

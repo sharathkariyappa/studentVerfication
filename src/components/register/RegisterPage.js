@@ -35,7 +35,7 @@ const RegisterPage = () => {
         >
           Register as Institute
         </Button>
-        <div className='connectButton'>Connect</div>
+        
       </Box>
     </Container>
   );

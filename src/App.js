@@ -9,6 +9,8 @@ import StudentRegister from "./components/register/StudentRegister";
 import InstituteRegister from "./components/register/InstituteRegister";
 import StudentProfile from "./components/profile/StudentProfile";
 import InstituteProfile from "./components/profile/InstituteProfile";
+import DocumentDetails from "./components/details/viewDocumentDetails";
+import UploadDocuments from "./components/details/uploadDocumentDetails";
 import {Routes, Route} from 'react-router-dom'
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
         <Route path="/profile/StudentProfile" element={<StudentProfile/>}/>
         <Route path="/profile/InstituteProfile" element={<InstituteProfile/>}/>
         <Route path="/login/InstituteLogin" element={<InstituteLogin/>}/>
+        <Route path="/details/viewDocumentDetails" element={<DocumentDetails/>}/>
+        <Route path="/details/uploadDocumentDetails" element={<UploadDocuments/>}/>
         <Route path="/register/RegisterPage" element={<RegisterPage/>}/>
         <Route path="/register/StudentRegister" element={<StudentRegister/>}/>
         <Route path="/register/InstituteRegister" element={<InstituteRegister/>}/>

@@ -16,6 +16,7 @@ const InstituteRegister = () => {
         Institute Register
       </Typography>
       <Box>
+      <div className='connectButton'>Connect</div>
       <TextField
           variant="outlined"
           margin="normal"
@@ -60,6 +61,7 @@ const InstituteRegister = () => {
           Register
         </Button>
       </Box>
+      
     </Container>
   );
 };

@@ -1,29 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container, Typography, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const StudentProfile = () => {
   const navigate = useNavigate();
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleViewDocuments = () => {
+    navigate('/details/viewDocumentDetails'); 
+  };
 
   const handleLogout = () => {
     
     navigate('/home'); 
   };
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+  const handleUploadDocuments = () => {
+    navigate('/details/uploadDocumentDetails'); 
   };
 
-  const handleUpload = () => {
-    if (selectedFile) {
+  // const handleFileChange = (event) => {
+  //   setSelectedFile(event.target.files[0]);
+  // };
+
+  // const handleUpload = () => {
+  //   if (selectedFile) {
       
-      console.log('File ready for upload:', selectedFile);
+  //     console.log('File ready for upload:', selectedFile);
       
-    } else {
-      console.log('No file selected');
-    }
-  };
+  //   } else {
+  //     console.log('No file selected');
+  //   }
+  // };
 
   return (
     <Container component="main" maxWidth="md" style={styles.container}>
@@ -39,21 +47,13 @@ const StudentProfile = () => {
         <p><strong>Email Address:</strong> </p>
       </Box>
       <Box style={styles.mainContent}>
-        <input
-          type="file"
-          id="file-upload"
-          style={{ display: 'none' }} 
-          onChange={handleFileChange}
-        />
-        <label htmlFor="file-upload">
-          <Button variant="contained" color="primary" style={styles.button} component="span">
-            Upload Documents
-          </Button>
-        </label>
-        <Button variant="contained" color="primary" style={styles.button} onClick={handleUpload}>
-          Confirm Upload
+      <Button variant="contained" color="primary" style={styles.button} onClick={handleUploadDocuments}>
+          Upload Documents
         </Button>
-        <Button variant="contained" color="primary" style={styles.button}>
+        {/* <Button variant="contained" color="primary" style={styles.button} onClick={handleUpload}>
+          Confirm Upload
+        </Button> */}
+        <Button variant="contained" color="primary" style={styles.button} onClick={handleViewDocuments}>
           View Documents
         </Button>
       </Box>
