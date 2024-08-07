@@ -17,10 +17,11 @@ function Header() {
         
       </div>
       <div className='rightH'>
-        
-        
-
+      <Link to='/about/AboutUs' className='link'>
+        <div className='headerItem'>About Us</div>
+      </Link>
       </div>
+      
     </header>
   )
 }

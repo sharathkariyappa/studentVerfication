@@ -2,6 +2,7 @@ import "./App.css";
 import Header from "./components/header";
 import Home from "./components/home";
 import LoginPage from "./components/login/LoginPage";
+import AboutUs from "./components/about/AboutUs";
 import StudentLogin from "./components/login/StudentLogin";
 import InstituteLogin from "./components/login/InstituteLogin";
 import RegisterPage from "./components/register/RegisterPage";
@@ -22,6 +23,7 @@ function App() {
         <Route path="/home" element={<Home/>}/>
         <Route path="/login/LoginPage" element={<LoginPage/>}/>
         <Route path="/login/StudentLogin" element={<StudentLogin/>}/>
+        <Route path="/about/AboutUs" element={<AboutUs/>}/>
         <Route path="/profile/StudentProfile" element={<StudentProfile/>}/>
         <Route path="/profile/InstituteProfile" element={<InstituteProfile/>}/>
         <Route path="/login/InstituteLogin" element={<InstituteLogin/>}/>
