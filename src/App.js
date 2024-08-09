@@ -27,7 +27,7 @@ function App() {
         <Route path="/profile/StudentProfile" element={<StudentProfile/>}/>
         <Route path="/profile/InstituteProfile" element={<InstituteProfile/>}/>
         <Route path="/login/InstituteLogin" element={<InstituteLogin/>}/>
-        <Route path="/details/viewDocumentDetails" element={<DocumentDetails/>}/>
+        <Route path="/details/viewDocumentDetails/:studentId" element={<DocumentDetails />}/>
         <Route path="/details/uploadDocumentDetails" element={<UploadDocuments/>}/>
         <Route path="/register/RegisterPage" element={<RegisterPage/>}/>
         <Route path="/register/StudentRegister" element={<StudentRegister/>}/>

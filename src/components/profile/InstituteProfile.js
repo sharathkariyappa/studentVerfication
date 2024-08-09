@@ -1,24 +1,91 @@
-import React from 'react';
-import { Container, Typography, Button, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { Container, Typography, Button, Box, TextField, Snackbar, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const InstituteProfile = () => {
   const navigate = useNavigate();
+  const [institute, setInstitute] = useState(null);
+  const [student, setStudent] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [walletAddress, setWalletAddress] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [isFetchingInstitute, setIsFetchingInstitute] = useState(false);
+  const [isFetchingStudent, setIsFetchingStudent] = useState(false);
 
-//   const handleViewStudentDetails = () => {
-//     navigate('/student-details'); 
-//   };
+  // Fetch Institute Details
+  const fetchInstituteDetails = async () => {
+    if (!walletAddress) {
+      setError('Wallet address is required');
+      setOpenSnackbar(true);
+      return;
+    }
 
-  const handleViewDocuments = () => {
-    navigate('/details/viewDocumentDetails'); 
+    setLoading(true);
+    setError(null);
+    setIsFetchingInstitute(true);
+
+    try {
+      const response = await axios.get('http://localhost:5000/api/institute/details', {
+        params: { walletAddress },
+      });
+      setInstitute(response.data);
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setLoading(false);
+      setIsFetchingInstitute(false);
+    }
   };
 
-//   const handleVerifyDocuments = () => {
-//     navigate('/verify-documents'); 
-//   };
-const handleLogout = () => {
+  // Fetch Student Details
+  const fetchStudentDetails = async () => {
+    if (!walletAddress) {
+      setError('Wallet address is required');
+      setOpenSnackbar(true);
+      return;
+    }
 
-    navigate('/home'); 
+    setLoading(true);
+    setError(null);
+    setIsFetchingStudent(true);
+
+    try {
+      const response = await axios.get('http://localhost:5000/api/student/details', {
+        params: { walletAddress },
+      });
+      setStudent(response.data);
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setLoading(false);
+      setIsFetchingStudent(false);
+    }
+  };
+
+  // Handle Errors
+  const handleError = (error) => {
+    if (error.response) {
+      setError(`Error: ${error.response.status} - ${error.response.data.error}`);
+    } else if (error.request) {
+      setError('Error: No response from server');
+    } else {
+      setError(`Error: ${error.message}`);
+    }
+    setOpenSnackbar(true);
+  };
+
+  const handleViewDocuments = () => {
+    navigate('/details/viewDocumentDetails');
+  };
+
+  const handleLogout = () => {
+    navigate('/home');
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   return (
@@ -30,28 +97,82 @@ const handleLogout = () => {
         <Typography variant="h6" gutterBottom>
           Institute Details
         </Typography>
-        <Typography paragraph>
-          <strong>Name of Institute:</strong> 
-        </Typography>
-        <Typography paragraph>
-          <strong>institute ID:</strong> 
-        </Typography>
-        <Typography paragraph>
-          <strong>institute Wallet Address:</strong> 
-        </Typography>
-        <Typography paragraph>
-          <strong>Email Address:</strong> 
-        </Typography>
+        <TextField
+          label="Wallet Address"
+          variant="outlined"
+          fullWidth
+          value={walletAddress}
+          onChange={(e) => setWalletAddress(e.target.value)}
+          style={styles.input}
+        />
+        <Box style={styles.buttonContainer}>
+          <Button
+            variant="contained"
+            color="primary"
+            style={styles.button}
+            onClick={fetchInstituteDetails}
+            disabled={loading || isFetchingInstitute}
+          >
+            {isFetchingInstitute ? 'Fetching Institute Details...' : 'Fetch Institute Details'}
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            style={styles.button}
+            onClick={fetchStudentDetails}
+            disabled={loading || isFetchingStudent}
+          >
+            {isFetchingStudent ? 'Fetching Student Details...' : 'Fetch Student Details'}
+          </Button>
+        </Box>
+        {error && (
+          <Snackbar
+            open={openSnackbar}
+            autoHideDuration={6000}
+            onClose={handleCloseSnackbar}
+          >
+            <Alert onClose={handleCloseSnackbar} severity="error">
+              {error}
+            </Alert>
+          </Snackbar>
+        )}
+        {institute && (
+          <>
+            <Typography paragraph>
+              <strong>Name of Institute:</strong> {institute.name}
+            </Typography>
+            <Typography paragraph>
+              <strong>Institute ID:</strong> {institute.instituteId}
+            </Typography>
+            <Typography paragraph>
+              <strong>Wallet Address:</strong> {institute.walletAddress}
+            </Typography>
+            <Typography paragraph>
+              <strong>Email Address:</strong> {institute.emailId}
+            </Typography>
+          </>
+        )}
+        {student && (
+          <>
+            <Typography paragraph>
+              <strong>Name:</strong> {student.name}
+            </Typography>
+            <Typography paragraph>
+              <strong>Student ID:</strong> {student.studentId}
+            </Typography>
+            <Typography paragraph>
+              <strong>Institute ID:</strong> {student.instituteId}
+            </Typography>
+            <Typography paragraph>
+              <strong>Wallet Address:</strong> {student.walletAddress}
+            </Typography>
+            <Typography paragraph>
+              <strong>Email Address:</strong> {student.email}
+            </Typography>
+          </>
+        )}
       </Box>
       <Box style={styles.actionsSection}>
-        <Button
-          variant="contained"
-          color="primary"
-          style={styles.button}
-        //   onClick={handleViewStudentDetails}
-        >
-          View Student Details
-        </Button>
         <Button
           variant="contained"
           color="primary"
@@ -64,7 +185,6 @@ const handleLogout = () => {
           variant="contained"
           color="primary"
           style={styles.button}
-        //   onClick={handleVerifyDocuments}
         >
           Verify Documents
         </Button>
@@ -91,6 +211,14 @@ const styles = {
   button: {
     marginRight: '10px',
     marginBottom: '10px',
+  },
+  input: {
+    marginBottom: '20px',
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '20px',
   },
 };
 

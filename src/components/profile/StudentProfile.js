@@ -1,37 +1,55 @@
-import React from 'react';
-import { Container, Typography, Button, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { Container, Typography, Button, Box, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const StudentProfile = () => {
   const navigate = useNavigate();
-  // const [selectedFile, setSelectedFile] = useState(null);
+  const [student, setStudent] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [walletAddress, setWalletAddress] = useState('');
+
+  const fetchStudentDetails = async () => {
+    if (!walletAddress) {
+      setError('Wallet address is required');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.get('http://localhost:5000/api/student/details', {
+        params: { walletAddress },
+      });
+      setStudent(response.data);
+    } catch (error) {
+      if (error.response) {
+        setError(`Error: ${error.response.status} - ${error.response.data.error}`);
+      } else if (error.request) {
+        setError('Error: No response from server');
+      } else {
+        setError(`Error: ${error.message}`);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleViewDocuments = () => {
-    navigate('/details/viewDocumentDetails'); 
+    if (student) {
+      navigate(`/details/viewDocumentDetails/${student.studentId}`);  // Navigate with studentId
+    }
   };
 
   const handleLogout = () => {
-    
     navigate('/home'); 
   };
 
   const handleUploadDocuments = () => {
     navigate('/details/uploadDocumentDetails'); 
   };
-
-  // const handleFileChange = (event) => {
-  //   setSelectedFile(event.target.files[0]);
-  // };
-
-  // const handleUpload = () => {
-  //   if (selectedFile) {
-      
-  //     console.log('File ready for upload:', selectedFile);
-      
-  //   } else {
-  //     console.log('No file selected');
-  //   }
-  // };
 
   return (
     <Container component="main" maxWidth="md" style={styles.container}>
@@ -40,19 +58,38 @@ const StudentProfile = () => {
       </Typography>
       <Box style={styles.sidebar}>
         <Typography variant="h6">Student Details</Typography>
-        <p><strong>Name:</strong> </p>
-        <p><strong>Student ID:</strong> </p>
-        <p><strong>Institute ID:</strong> </p>
-        <p><strong>Wallet Address:</strong> </p>
-        <p><strong>Email Address:</strong> </p>
+        <TextField
+          label="Wallet Address"
+          variant="outlined"
+          fullWidth
+          value={walletAddress}
+          onChange={(e) => setWalletAddress(e.target.value)}
+          style={styles.input}
+        />
+        <Button 
+          variant="contained" 
+          color="primary" 
+          onClick={fetchStudentDetails}
+          style={styles.button}
+        >
+          Fetch Details
+        </Button>
+        {loading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
+        {student && (
+          <>
+            <p><strong>Name:</strong> {student.name}</p>
+            <p><strong>Student ID:</strong> {student.studentId}</p>
+            <p><strong>Institute ID:</strong> {student.instituteId}</p>
+            <p><strong>Wallet Address:</strong> {student.walletAddress}</p>
+            <p><strong>Email Address:</strong> {student.email}</p>
+          </>
+        )}
       </Box>
       <Box style={styles.mainContent}>
-      <Button variant="contained" color="primary" style={styles.button} onClick={handleUploadDocuments}>
+        <Button variant="contained" color="primary" style={styles.button} onClick={handleUploadDocuments}>
           Upload Documents
         </Button>
-        {/* <Button variant="contained" color="primary" style={styles.button} onClick={handleUpload}>
-          Confirm Upload
-        </Button> */}
         <Button variant="contained" color="primary" style={styles.button} onClick={handleViewDocuments}>
           View Documents
         </Button>
@@ -78,6 +115,9 @@ const styles = {
   },
   button: {
     marginRight: '10px',
+  },
+  input: {
+    marginBottom: '20px',
   },
 };
 

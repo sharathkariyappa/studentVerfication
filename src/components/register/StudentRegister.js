@@ -1,30 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Typography, TextField, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const StudentRegister = () => {
   const navigate = useNavigate();
-  
-  const handleregister = () => {
-    
-    navigate('/login/StudentLogin'); 
-  };
-  return (
+  const [formData, setFormData] = useState({
+    name: '',
+    studentId: '',
+    instituteId: '',
+    walletAddress: '',
+    email: '',
+  });
 
-    
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleRegister = async () => {
+    try {
+      // Convert studentId and instituteId to numbers
+      const formattedData = {
+        ...formData,
+        studentId: Number(formData.studentId),
+        instituteId: Number(formData.instituteId),
+      };
+  
+      await axios.post('http://localhost:5000/api/register', formattedData);
+      navigate('/login/StudentLogin');
+    } catch (error) {
+      console.error('Error registering student:', error.response?.data || error.message);
+    }
+  };
+  
+
+  return (
     <Container component="main" maxWidth="xs" style={styles.container}>
       <Typography variant="h5" gutterBottom>
         Student Register
       </Typography>
       <Box>
-      <div className='connectButton'>Connect</div>
-      <TextField
+        <TextField
           variant="outlined"
           margin="normal"
           required
           fullWidth
           label="Student Name"
-          type="Student Name"
+          name="name"
+          type="text"
+          value={formData.name}
+          onChange={handleChange}
         />
         <TextField
           variant="outlined"
@@ -32,7 +61,10 @@ const StudentRegister = () => {
           required
           fullWidth
           label="Student ID"
-          type="Student ID"
+          name="studentId"
+          type="number"
+          value={formData.studentId}
+          onChange={handleChange}
         />
         <TextField
           variant="outlined"
@@ -40,7 +72,10 @@ const StudentRegister = () => {
           required
           fullWidth
           label="Institute ID"
-          type="Institute ID"
+          name="instituteId"
+          type="number"
+          value={formData.instituteId}
+          onChange={handleChange}
         />
         <TextField
           variant="outlined"
@@ -48,22 +83,26 @@ const StudentRegister = () => {
           required
           fullWidth
           label="Wallet Address"
-          type="Wallet Address"
+          name="walletAddress"
+          type="text"
+          value={formData.walletAddress}
+          onChange={handleChange}
         />
-         <TextField
+        <TextField
           variant="outlined"
           margin="normal"
           required
           fullWidth
           label="Email ID"
-          type="Email"
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
         />
-        
         <Button
-          
           variant="contained"
           color="primary"
-          onClick={handleregister}
+          onClick={handleRegister}
           fullWidth
           style={styles.button}
         >
