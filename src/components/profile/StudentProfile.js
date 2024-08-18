@@ -37,11 +37,11 @@ const StudentProfile = () => {
     }
   };
 
-  const handleViewDocuments = () => {
-    if (student) {
-      navigate(`/details/viewDocumentDetails/${student.studentId}`);  // Navigate with studentId
-    }
-  };
+  // const handleViewDocuments = () => {
+  //   if (student) {
+  //     navigate(`/details/viewDocumentDetails/${student.studentId}`);  // Navigate with studentId
+  //   }
+  // };
 
   const handleLogout = () => {
     navigate('/home'); 
@@ -90,9 +90,9 @@ const StudentProfile = () => {
         <Button variant="contained" color="primary" style={styles.button} onClick={handleUploadDocuments}>
           Upload Documents
         </Button>
-        <Button variant="contained" color="primary" style={styles.button} onClick={handleViewDocuments}>
+        {/* <Button variant="contained" color="primary" style={styles.button} onClick={handleViewDocuments}>
           View Documents
-        </Button>
+        </Button> */}
       </Box>
       <Button variant="contained" color="secondary" style={styles.button} onClick={handleLogout}>
         Logout

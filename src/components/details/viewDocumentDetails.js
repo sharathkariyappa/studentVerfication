@@ -10,6 +10,15 @@ const DocumentDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+
+  const handleVerifyDocuments = ()=>{
+    navigate('/details/verifyDocument');
+  };
+
+  const handleBack = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
+
   useEffect(() => {
     const fetchDocument = async () => {
       try {
@@ -54,11 +63,22 @@ const DocumentDetails = () => {
           <Typography><strong>Document ID:</strong> {document.id}</Typography>
           <Typography><strong>Student ID:</strong> {document.studentId}</Typography>
         </Box>
+        <Box>
+         <Button
+          variant="contained"
+          color="secondary"
+          style={styles.button}
+          onClick={handleVerifyDocuments}
+        >
+          verify Document
+        </Button>
+        
+        </Box>
         <Button
           variant="contained"
           color="secondary"
           style={styles.button}
-          onClick={() => navigate(-1)}
+          onClick={handleBack}
         >
           Back
         </Button>

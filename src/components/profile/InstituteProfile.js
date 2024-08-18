@@ -77,8 +77,14 @@ const InstituteProfile = () => {
   };
 
   const handleViewDocuments = () => {
-    navigate('/details/viewDocumentDetails');
+    if (student) {
+      navigate(`/details/viewDocumentDetails/${student.studentId}`);  // Navigate with studentId
+    }
   };
+
+  // const handleVerifyDocuments = ()=>{
+  //   navigate('/details/verifyDocument');
+  // };
 
   const handleLogout = () => {
     navigate('/home');
@@ -181,13 +187,14 @@ const InstituteProfile = () => {
         >
           View Documents
         </Button>
-        <Button
+        {/* <Button
           variant="contained"
           color="primary"
           style={styles.button}
+          onClick={handleVerifyDocuments}
         >
           Verify Documents
-        </Button>
+        </Button> */}
       </Box>
       <Button variant="contained" color="secondary" style={styles.button} onClick={handleLogout}>
         Logout

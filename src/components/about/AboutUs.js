@@ -13,35 +13,7 @@ const AboutUs = () => {
       <Typography paragraph>
         We are a team of passionate individuals dedicated to making a difference in the world through technology. Our mission is to provide innovative solutions and exceptional service to our clients allowing them to verify the documents with ease through Blocchain Technology.
       </Typography>
-      <Typography variant="h5" gutterBottom>
-        Our Team
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <Paper style={styles.paper}>
-            <Typography variant="h6">Sharath Kariyappa krupakara</Typography>
-            <Typography variant="body1">Full Stack blockchain developer</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper style={styles.paper}>
-            <Typography variant="h6">Sharan Onamshety</Typography>
-            <Typography variant="body1">Blockchain Developer</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper style={styles.paper}>
-            <Typography variant="h6">Aditya Yadav</Typography>
-            <Typography variant="body1">Smart Contract Developer</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper style={styles.paper}>
-            <Typography variant="h6">Sriniwas Mane</Typography>
-            <Typography variant="body1">Blockchain Developer</Typography>
-          </Paper>
-        </Grid>
-      </Grid>
+      
       <Typography variant="h5" gutterBottom>
         Our Mission
       </Typography>
@@ -52,7 +24,7 @@ const AboutUs = () => {
         Contact Us
       </Typography>
       <Typography paragraph>
-        If you have any questions or would like to learn more about what we do, please <a href="Blockean@org.in">email us</a>. We’d love to hear from you!
+        If you have any questions or would like to learn more about what we do, please <a href="sharathkariyappa@gmail.com">email us</a>. We’d love to hear from you!
       </Typography>
     </Container>
   );
