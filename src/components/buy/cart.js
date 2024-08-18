@@ -89,29 +89,26 @@ function Swap(props) {
   }
 
   async function fetchDexSwap(){
-
-    const allowance = await axios.get(`https://api.1inch.io/v5.0/1/approve/allowance?tokenAddress=${tokenOne.address}&walletAddress=${address}`)
+    try {
+      const allowance = await axios.get(`https://api.1inch.io/v5.0/1/approve/allowance?tokenAddress=${tokenOne.address}&walletAddress=${address}`);
   
-    if(allowance.data.allowance === "0"){
-
-      const approve = await axios.get(`https://api.1inch.io/v5.0/1/approve/transaction?tokenAddress=${tokenOne.address}`)
-
-      settxDetails(approve.data);
-      console.log("not approved")
-      return
-
+      if(allowance.data.allowance === "0"){
+        const approve = await axios.get(`https://api.1inch.io/v5.0/1/approve/transaction?tokenAddress=${tokenOne.address}`);
+        settxDetails(approve.data);
+        console.log("not approved");
+        return;
+      }
+  
+      const tx = await axios.get(`https://api.1inch.io/v5.0/1/swap?fromTokenAddress=${tokenOne.address}&toTokenAddress=${tokenTwo.address}&amount=${tokenOneAmount.padEnd(tokenOne.decimals+tokenOneAmount.length, '0')}&fromAddress=${address}&slippage=${slippage}`);
+      let decimals = Number(`1E${tokenTwo.decimals}`);
+      setTokenTwoAmount((Number(tx.data.toTokenAmount)/decimals).toFixed(2));
+      settxDetails(tx.data.tx);
+    } catch (error) {
+      console.error('Error fetching Dex swap:', error);
+      message.error('An error occurred while fetching swap details.');
     }
-
-    const tx = await axios.get(
-      `https://api.1inch.io/v5.0/1/swap?fromTokenAddress=${tokenOne.address}&toTokenAddress=${tokenTwo.address}&amount=${tokenOneAmount.padEnd(tokenOne.decimals+tokenOneAmount.length, '0')}&fromAddress=${address}&slippage=${slippage}`
-    )
-
-    let decimals = Number(`1E${tokenTwo.decimals}`)
-    setTokenTwoAmount((Number(tx.data.toTokenAmount)/decimals).toFixed(2));
-
-    settxDetails(tx.data.tx);
-  
   }
+  
 
   useEffect(()=>{
     fetchPrices(tokenList[0].address,tokenList[1].address)
